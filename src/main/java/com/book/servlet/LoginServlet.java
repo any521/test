@@ -12,7 +12,10 @@ import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
-
+/*
+* @ggi
+* 怎么还不写
+* */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ThymeleafUtil.process("login.html", new Context(), resp.getWriter());
