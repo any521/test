@@ -18,6 +18,9 @@ public class LoginServlet extends HttpServlet {
 * */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ThymeleafUtil.process("login.html", new Context(), resp.getWriter());
+        Context content = new Context();
+        content.setVariable("zjh","孟宇真操蛋");
+        content.setVariable("title","登录");
+        ThymeleafUtil.process("login.html", content, resp.getWriter());
     }
 }

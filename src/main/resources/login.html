@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="zxx">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <!-- Head -->
 
 <head>
 
-    <title>Universe Signin Form Flat Responsive Widget Template</title>
+    <title>图书管理系统 - 登录</title>
 
     <!-- Meta-Tags -->
     <meta charset="UTF-8">
@@ -25,16 +25,18 @@
 
     <section class="main">
         <div class="logo text-center">
-            <h1> <a href="login.html"> 大作者是shabi</a></h1>
+            <h1 th:content="${title}">默认标题</h1>
+            <h1 th:text ="${zjh}">666</h1>
+            <h1> <a href="login.html">张景淏的图书管理系统</a></h1>
         </div>
         <div class="content-w3ls text-center">
             <img src="static/images/admin.png" alt="" class="img-responsive">
             <form action="#" method="post">
                 <div class="wthree-field">
-                    <input name="text1" id="text1" type="text" value="" placeholder="Username" required>
+                    <input name="username" id="text1" type="text" value="" placeholder="用户名称" required>
                 </div>
                 <div class="wthree-field">
-                    <input name="password" id="myInput" type="Password" placeholder="Password">
+                    <input name="password" id="myInput" type="Password" placeholder="密码">
                 </div>
                 <div class="wthree-field">
                     <button type="submit" class="btn">Sign In</button>
