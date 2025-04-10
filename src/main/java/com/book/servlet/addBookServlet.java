@@ -1,6 +1,5 @@
-package com.book.pages;
+package com.book.servlet;
 
-import com.book.entity.User;
 import com.book.serice.Bookservice;
 import com.book.serice.impl.Bookserviceimpl;
 import com.book.utils.ThymeleafUtil;
@@ -14,20 +13,26 @@ import org.thymeleaf.context.Context;
 
 import java.io.IOException;
 
-@WebServlet("/students")
-public class StudentServlet extends HttpServlet {
-    Bookservice service;
+@WebServlet("/add-book")
+public class addBookServlet extends HttpServlet {
+    Bookservice bookservice;
+
     @Override
     public void init(ServletConfig config) throws ServletException {
-        service = new Bookserviceimpl();
+        bookservice = new Bookserviceimpl();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Context context = new Context();
-        User user  = (User) req.getSession().getAttribute("user");
-        context.setVariable("nickname",user.getNickname());
-        context.setVariable("student_list",service.getStudentList());
-        ThymeleafUtil.process("students.html",context,resp.getWriter());
+        ThymeleafUtil.process("add-book.html",new Context(),resp.getWriter());
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String title = req.getParameter("title");
+        String desc = req.getParameter("desc");
+        double price = Double.parseDouble(req.getParameter("price"));
+        bookservice.addBook(title,desc,price);
+        resp.sendRedirect("books");
     }
 }

@@ -5,6 +5,7 @@ import com.book.utils.ThymeleafUtil;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -22,8 +23,29 @@ public class LoginServlet extends HttpServlet {
         userserice = new UserServiceimpl();
     }
 
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Cookie[] cookies = req.getCookies();
+        String username = null;
+        String password = null;
+        if(cookies != null){
+            for (Cookie cookie : cookies) {
+                if(cookie.getName().equals("username")){
+                    username = cookie.getValue();
+                }
+                if(cookie.getName().equals("password")){
+                    password = cookie.getValue();
+                }
+            }
+            if(username != null && password != null){
+                if(userserice.jiance(username,password,req.getSession())){
+                    resp.sendRedirect("index");
+                    return ;
+                }
+            }
+        }
+
         Context context = new Context();
         if(req.getSession().getAttribute("error") != null){
             context.setVariable("failure",true);
@@ -42,7 +64,15 @@ public class LoginServlet extends HttpServlet {
         String password = req.getParameter("password");
         String remember = req.getParameter("remember-me");
         if(userserice.jiance(username,password,req.getSession())){
-            resp.sendRedirect("index");
+            if(remember != null){
+                Cookie cookie_username = new Cookie("username",username);
+                cookie_username.setMaxAge(60*60*24*7);
+                Cookie cookie_password = new Cookie("password",password);
+                cookie_password.setMaxAge(60*60*24*7);
+                resp.addCookie(cookie_username);
+                resp.addCookie(cookie_password);
+                resp.sendRedirect("index");
+            }
         }else {
             req.getSession().setAttribute("error",new Object());
             this.doGet(req,resp);

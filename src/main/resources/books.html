@@ -128,7 +128,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                                <tr th:each="book, iterStat : ${book_list}">
+                                                <tr th:each="book,iterStat: ${book_list}">
                                                     <td th:text="'#'+${book.getBid()}">$600</td>
                                                     <td th:text="${book.getTitle()}">$600</td>
                                                     <td th:text="${book.getDesc()}">$600</td>

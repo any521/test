@@ -13,6 +13,7 @@ public class ThymeleafUtil {
         try{
             engine = new TemplateEngine();
             ClassLoaderTemplateResolver r = new ClassLoaderTemplateResolver();
+            r.setCharacterEncoding("UTF-8");
             engine.setTemplateResolver(r);
         }catch (Exception e){
             throw new RuntimeException(e);
